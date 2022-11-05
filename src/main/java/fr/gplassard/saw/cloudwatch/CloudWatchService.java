@@ -1,6 +1,9 @@
 package fr.gplassard.saw.cloudwatch;
 
 
+import fr.gplassard.saw.core.Interruptor;
+import fr.gplassard.saw.infra.Clock;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClient;
 import software.amazon.awssdk.services.cloudwatchlogs.model.DescribeLogGroupsRequest;
@@ -9,19 +12,18 @@ import software.amazon.awssdk.services.cloudwatchlogs.model.FilteredLogEvent;
 import software.amazon.awssdk.services.cloudwatchlogs.model.LogGroup;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Slf4j
+@AllArgsConstructor
 public class CloudWatchService {
+    private final Clock clock;
     private final CloudWatchLogsClient client;
-    private static final Integer MAX_INGESTION_DELTA_SECONDS = 5;
-
-    public CloudWatchService(CloudWatchLogsClient client) {
-        this.client = client;
-    }
 
     public List<String> listLogGroups(String prefix) {
         return this.client.describeLogGroups(DescribeLogGroupsRequest.builder()
@@ -33,11 +35,10 @@ public class CloudWatchService {
                 .collect(Collectors.toList());
     }
 
-    public void watchLogs(String logGroup, Consumer<FilteredLogEvent> consumer) {
+    public void watchLogs(String logGroup, Interruptor interruptor, Consumer<FilteredLogEvent> consumer) {
         Map<String, Long> seenEvents = new HashMap<>();
-        Instant start = Instant.now();
-        while (true){
-            Instant before = Instant.now();
+        Instant start = this.clock.now();
+        while (interruptor.shouldContinue()) {
             var response = this.client.filterLogEvents(FilterLogEventsRequest.builder()
                     .startTime(start.toEpochMilli())
                     .logGroupName(logGroup)
@@ -58,20 +59,14 @@ public class CloudWatchService {
                     .max(Comparator.comparing(FilteredLogEvent::timestamp))
                     .map(FilteredLogEvent::timestamp)
                     .map(Instant::ofEpochMilli)
-                    .orElse(before)
-                    .minus(MAX_INGESTION_DELTA_SECONDS, ChronoUnit.SECONDS);
+                    .orElse(start);
+
             start = nextStart;
 
             seenEvents.entrySet().removeIf(entry -> nextStart.toEpochMilli() > entry.getValue());
             seenEvents.putAll(response.events().stream().collect(Collectors.toMap(FilteredLogEvent::eventId, FilteredLogEvent::timestamp)));
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            this.clock.sleep(1_000L);
         }
-
     }
-
 
 }
