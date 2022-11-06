@@ -30,19 +30,31 @@ public class Watch implements Callable<Integer> {
     public Integer call() throws Exception {
         log.debug("Watching log groups {}", this.logGroupPrefix);
         List<String> logGroups = this.cloudWatchService.listLogGroups(this.logGroupPrefix);
+
+        if (logGroups.isEmpty()) {
+            log.info("Found no loggroup with prefix {}", this.logGroupPrefix);
+            return 0;
+        }
+
         ExecutorService executor = Executors.newFixedThreadPool(logGroups.size());
-        String commonPrefix = StringUtils.getCommonPrefix(logGroups.toArray(new String[0]));
+        String commonPrefix = logGroups.size() > 1 ? StringUtils.getCommonPrefix(logGroups.toArray(new String[0])) : logGroups.get(0);
+
         for (int i = 0; i < logGroups.size(); i++) {
             String logGroup = logGroups.get(i);
             String withoutPrefix = logGroup.replace(commonPrefix, "");
             // TODO replace with async and don't create too many threads
             final int index = i;
-            executor.submit(() -> this.cloudWatchService.watchLogs(logGroup, () -> true, event -> {
-                String date = Instant.ofEpochMilli(event.timestamp()).toString();
-                System.out.println(format(withoutPrefix, event, date, index));
-            }));
+            executor.submit(() -> {
+                try {
+                    this.cloudWatchService.watchLogs(logGroup, () -> true, event -> {
+                        String date = Instant.ofEpochMilli(event.timestamp()).toString();
+                        System.out.println(format(withoutPrefix, event, date, index));
+                    });
+                } catch (RuntimeException e) {
+                    log.error("Error while processing loggroup {}", logGroup, e);
+                }
+            });
         }
-        executor.shutdown();
         var success = executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
         return success ? 0 : 1;
     }
@@ -50,7 +62,7 @@ public class Watch implements Callable<Integer> {
     private CommandLine.Help.Ansi.Text format(String withoutPrefix, FilteredLogEvent event, String date, int index) {
         return CommandLine.Help.Ansi.AUTO.text(
                 "@|bold," +
-                        COLORS.get(index % COLORS.size()) +
+                        COLORS.get(index % COLORS.size()) + " " +
                         String.format("[%s][%s] %s", withoutPrefix, date, event.message()) +
                         "|@"
         );

@@ -49,7 +49,7 @@ public class CloudWatchService {
                     .filter(event -> !seenEvents.containsKey(event.eventId()))
                     .collect(Collectors.toList());
 
-            log.debug("{} : retrieved {} events, from which {} are new", logGroup, response.events().size(), newEvents.size());
+            log.debug("{} : retrieved {} event(s), {} new, start {}", logGroup, response.events().size(), newEvents.size(), start);
             newEvents
                     .forEach(consumer);
 
