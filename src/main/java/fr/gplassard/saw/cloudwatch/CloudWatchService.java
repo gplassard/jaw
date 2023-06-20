@@ -32,7 +32,7 @@ public class CloudWatchService {
                 )
                 .logGroups()
                 .stream().map(LogGroup::logGroupName)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void watchLogs(String logGroup, Interruptor interruptor, Consumer<FilteredLogEvent> consumer) {
@@ -47,7 +47,7 @@ public class CloudWatchService {
             var newEvents = response.events()
                     .stream()
                     .filter(event -> !seenEvents.containsKey(event.eventId()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             log.debug("{} : retrieved {} event(s), {} new, start {}", logGroup, response.events().size(), newEvents.size(), start);
             newEvents

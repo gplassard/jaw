@@ -11,8 +11,12 @@ repositories {
 }
 
 apply plugin: 'java'
-sourceCompatibility = 11
-targetCompatibility = 11
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
 
 application {
     mainClass = 'fr.gplassard.saw.Saw'
