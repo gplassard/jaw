@@ -1,0 +1,21 @@
+[versions]
+picocli = "4.7.5"
+commons-lang = "3.14.0"
+aws-sdk = "2.23.16"
+lombok = "1.18.30"
+logback = "1.4.14"
+junit = "5.10.1"
+mockito = "5.10.0"
+assertj = "3.25.2"
+
+[libraries]
+picocli = { module = "info.picocli:picocli", version.ref = "picocli" }
+commons-lang = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang" }
+aws-cloudwatch = { module = "software.amazon.awssdk:cloudwatchlogs", version.ref = "aws-sdk" }
+aws-sts = { module = "software.amazon.awssdk:sts", version.ref = "aws-sdk" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+mockito = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
