@@ -3,6 +3,7 @@ plugins {
     id("application")
     alias(libs.plugins.jreleaser.plugin)
     alias(libs.plugins.shadow.plugin)
+    alias(libs.plugins.release.plugin)
 }
 
 group = "fr.gplassard"

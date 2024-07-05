@@ -7,8 +7,10 @@ logback = "1.4.14"
 junit = "5.10.1"
 mockito = "5.10.0"
 assertj = "3.25.2"
+
 jreleaser-plugin = "1.13.1"
 shadow-plugin = "8.1.1"
+release-plugin = "3.0.2"
 
 [libraries]
 picocli = { module = "info.picocli:picocli", version.ref = "picocli" }
@@ -25,3 +27,4 @@ assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 [plugins]
 jreleaser-plugin = { id = "org.jreleaser", version.ref = "jreleaser-plugin"}
 shadow-plugin = { id = "com.github.johnrengelman.shadow", version.ref = "shadow-plugin"}
+release-plugin = { id = "net.researchgate.release", version.ref = "release-plugin"}
