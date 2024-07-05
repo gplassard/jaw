@@ -41,6 +41,14 @@ tasks.withType<Test> {
 }
 
 jreleaser {
+    project {
+        authors = listOf("gplassard")
+        description = "Tail AWS CloudWatch logs"
+        license = "Apache-2.0"
+        links {
+            homepage = "https://github.com/gplassard/jaw"
+        }
+    }
     distributions {
         distributions.create("jaw") {
             artifact {
