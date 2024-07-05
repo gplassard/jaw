@@ -45,6 +45,7 @@ jreleaser {
         authors = listOf("gplassard")
         description = "Tail AWS CloudWatch logs"
         license = "Apache-2.0"
+        copyright = "gplassard"
         links {
             homepage = "https://github.com/gplassard/jaw"
         }
