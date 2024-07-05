@@ -53,7 +53,7 @@ jreleaser {
     distributions {
         distributions.create("jaw") {
             artifact {
-                path = file("build/libs/jaw-${project.version}-all.jar")
+                path = file("build/libs/jaw-${version}-all.jar")
             }
         }
     }
