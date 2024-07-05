@@ -1,3 +1,5 @@
+import net.researchgate.release.ReleaseExtension
+
 plugins {
     id("java")
     id("application")
@@ -55,6 +57,15 @@ jreleaser {
             artifact {
                 path = file("build/libs/jaw-${version}-all.jar")
             }
+            artifact {
+                path = file("build/distributions/jaw-${version}.zip")
+            }
         }
     }
+}
+configure<ReleaseExtension> {
+    tagTemplate.set("v\${version}")
+    preTagCommitMessage.set("release(jaw) - pre tag commit: ")
+    tagCommitMessage.set("release(jaw) - creating tag: ")
+    newVersionCommitMessage.set("release(jaw) - new version commit: ")
 }
