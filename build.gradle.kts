@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("application")
     alias(libs.plugins.jreleaser.plugin)
+    alias(libs.plugins.shadow.plugin)
 }
 
 group = "fr.gplassard"
@@ -37,4 +38,14 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+jreleaser {
+    distributions {
+        distributions.create("jaw") {
+            artifact {
+                path = file("build/libs/jaw-${project.version}-all.jar")
+            }
+        }
+    }
 }
