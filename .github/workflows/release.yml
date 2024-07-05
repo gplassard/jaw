@@ -24,6 +24,12 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         env:
+        with:
+          arguments: build
+
+      - name: Release
+        uses: gradle/gradle-build-action@v2
+        env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           arguments: jreleaserFullRelease
