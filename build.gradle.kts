@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "fr.gplassard"
-version = "1.0.0-SNAPSHOTT"
+version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
