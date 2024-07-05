@@ -7,6 +7,7 @@ logback = "1.4.14"
 junit = "5.10.1"
 mockito = "5.10.0"
 assertj = "3.25.2"
+jreleaser-plugin = "1.13.1"
 
 [libraries]
 picocli = { module = "info.picocli:picocli", version.ref = "picocli" }
@@ -19,3 +20,6 @@ junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jun
 junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 mockito = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+
+[plugins]
+jreleaser-plugin = { id = "org.jreleaser", version.ref = "jreleaser-plugin"}
