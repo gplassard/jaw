@@ -1,11 +1,13 @@
 package fr.gplassard.jaw;
 
+import fr.gplassard.jaw.commands.Version;
 import fr.gplassard.jaw.commands.Watch;
 import picocli.CommandLine;
 
 @CommandLine.Command(
         name = "jaw",
         subcommands = {
+                Version.class,
                 Watch.class,
                 CommandLine.HelpCommand.class
         }

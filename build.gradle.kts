@@ -42,6 +42,15 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.register<Copy>("copyGradleProperties") {
+    from("gradle.properties")
+    into("src/main/resources")
+}
+
+tasks.named("build").configure {
+    dependsOn("copyGradleProperties")
+}
+
 jreleaser {
     project {
         authors = listOf("gplassard")
@@ -63,6 +72,7 @@ jreleaser {
         }
     }
 }
+
 configure<ReleaseExtension> {
     tagTemplate.set("v\${version}")
     preTagCommitMessage.set("release(jaw) - pre tag commit: ")
