@@ -28,7 +28,7 @@ public class Watch implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        log.debug("Watching log groups {}", this.logGroupPrefix);
+        log.info("Watching log groups {}", this.logGroupPrefix);
         List<String> logGroups = this.cloudWatchService.listLogGroups(this.logGroupPrefix);
 
         if (logGroups.isEmpty()) {
