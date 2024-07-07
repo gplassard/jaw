@@ -47,7 +47,7 @@ tasks.register<Copy>("copyGradleProperties") {
     into("src/main/resources")
 }
 
-tasks.named("build").configure {
+tasks.named("processResources").configure {
     dependsOn("copyGradleProperties")
 }
 
