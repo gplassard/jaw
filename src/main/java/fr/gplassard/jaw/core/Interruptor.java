@@ -1,4 +1,4 @@
-package fr.gplassard.saw.core;
+package fr.gplassard.jaw.core;
 
 @FunctionalInterface
 public interface Interruptor {

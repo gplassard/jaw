@@ -1,7 +1,7 @@
-package fr.gplassard.saw.commands;
+package fr.gplassard.jaw.commands;
 
-import fr.gplassard.saw.cloudwatch.CloudWatchService;
-import fr.gplassard.saw.infra.RealClock;
+import fr.gplassard.jaw.cloudwatch.CloudWatchService;
+import fr.gplassard.jaw.infra.RealClock;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import picocli.CommandLine;

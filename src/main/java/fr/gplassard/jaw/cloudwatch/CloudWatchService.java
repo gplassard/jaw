@@ -1,8 +1,8 @@
-package fr.gplassard.saw.cloudwatch;
+package fr.gplassard.jaw.cloudwatch;
 
 
-import fr.gplassard.saw.core.Interruptor;
-import fr.gplassard.saw.infra.Clock;
+import fr.gplassard.jaw.core.Interruptor;
+import fr.gplassard.jaw.infra.Clock;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClient;

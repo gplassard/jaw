@@ -1,4 +1,4 @@
-package fr.gplassard.saw.infra;
+package fr.gplassard.jaw.infra;
 
 import java.time.Instant;
 

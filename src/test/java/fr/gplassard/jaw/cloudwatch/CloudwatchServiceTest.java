@@ -1,7 +1,7 @@
-package fr.gplassard.saw.cloudwatch;
+package fr.gplassard.jaw.cloudwatch;
 
-import fr.gplassard.saw.core.Interruptor;
-import fr.gplassard.saw.infra.Clock;
+import fr.gplassard.jaw.core.Interruptor;
+import fr.gplassard.jaw.infra.Clock;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

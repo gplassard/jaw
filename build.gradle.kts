@@ -21,7 +21,7 @@ java {
 }
 
 application {
-    mainClass = "fr.gplassard.saw.Saw"
+    mainClass = "fr.gplassard.jaw.Jaw"
 }
 
 dependencies {
